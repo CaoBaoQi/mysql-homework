@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jz.cbq.backend.mapper.ScoreMapper">
+        
+    <select id="getStuScoreList" resultMap="stuScoreMap">
+        select a.stu_id, a.stu_name, b.class_name, sum(score) c
+        FROM t_score a INNER JOIN t_student b on a.stu_id=b.stu_id inner join t_choose_course d on a.choose_course_id=d.choose_course_id
+        where a.stu_id like concat(#{admissionYearMajor},'%') and d.if_degree='1'
+        <if test="stuName!='' and stuName!=null">
+            and a.stu_name like concat('%',#{stuName},'%')
+        </if>
+        <if test="stuId!='' and stuId!=null">
+            and a.stu_id like concat('%',#{stuId},'%')
+        </if>
+        <if test="className!='' and className!=null">
+            and substr(b.class_name,5) like concat('%',#{className},'%')
+        </if>
+        group by a.stu_id,a.stu_name order by c desc
+        limit #{limit1},#{limit2}
+    </select>
+
+    <select id="getStuScoreTotal" resultType="java.lang.Integer">
+        select count(DISTINCT a.stu_id)
+        FROM t_score a INNER JOIN t_student b on a.stu_id=b.stu_id
+        where a.stu_id like concat(#{admissionYearMajor},'%')
+        <if test="stuName!='' and stuName!=null">
+            and a.stu_name like concat('%',#{stuName},'%')
+        </if>
+        <if test="stuId!='' and stuId!=null">
+            and a.stu_id like concat('%',#{stuId},'%')
+        </if>
+        <if test="className!='' and className!=null">
+            and substr(b.class_name,5) like concat('%',#{className},'%')
+        </if>
+    </select>
+
+    <resultMap id="stuScoreMap" type="jz.cbq.backend.entity.StuScoreMap">
+        <id column="stu_id" property="stuId"/>
+        <result column="stu_id" property="stuName"/>
+        <result column="stu_name" property="stuName"/>
+        <result column="class_name" property="className"/>
+        <result column="c" property="scoreTotal"/>
+    </resultMap>
+</mapper>
