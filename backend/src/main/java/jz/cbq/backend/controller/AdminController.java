@@ -25,7 +25,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    @Value("${adminSecret}")
+    @Value("${cbq.admin-secret}")
     private String adminSecret;
     @Resource
     private IAdminService adminService;

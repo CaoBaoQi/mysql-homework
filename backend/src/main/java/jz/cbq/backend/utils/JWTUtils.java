@@ -3,6 +3,7 @@ package jz.cbq.backend.utils;
 import com.alibaba.fastjson2.JSON;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class JWTUtils {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Value("${cbq.jwt-secret}")
     private static final String JWT_SECRET = "CaoBaoQi";
 
     /**

@@ -42,4 +42,6 @@ logging:
       cbq:
         backend:
           mapper: debug
-adminSecret: TODO
+cbq:
+  admin-secret: TODO
+  jwt-secret: TODO
