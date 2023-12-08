@@ -3,11 +3,12 @@
     <div class="findAdd">
       <el-input autocomplete="off" placeholder="请输入班主任编号" v-model="teaId" clearable
                 style="width: 240px"></el-input>
-      <el-input autocomplete="off" placeholder="请输入班主任姓名" v-model="teaName" clearable style="width: 240px"></el-input>
+      <el-input autocomplete="off" placeholder="请输入班主任姓名" v-model="teaName" clearable
+                style="width: 240px"></el-input>
       <el-input autocomplete="off" placeholder="请输入班级名称" v-model="className" clearable
                 style="width: 240px"></el-input>
       <el-button type="primary" @click="searchTeaList" icon="el-icon-search">搜索</el-button>
-      <el-button @click="resetTeaList" icon="el-icon-refresh" style="margin-left:0" >刷新</el-button>
+      <el-button @click="resetTeaList" icon="el-icon-refresh" style="margin-left:0">刷新</el-button>
       <el-button style="margin-left: 40px" type="primary" @click="openAddTea" icon="el-icon-plus">新增班主任</el-button>
     </div>
     <div class="teaTable">
@@ -33,16 +34,15 @@
       </el-table>
     </div>
     <div class="page">
-      <el-pagination
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-          :pager-count="11"
-          background
-          :current-page="pageNum"
-          :page-size="pageSize"
-          :page-sizes="[5, 10, 20, 50,100]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
+      <el-pagination style="text-align: center" @current-change="handleCurrentChange"
+                     @size-change="handleSizeChange"
+                     :pager-count="11"
+                     background
+                     :current-page="pageNum"
+                     :page-size="pageSize"
+                     :page-sizes="[5, 10, 20, 50,100]"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
     </div>
     <!--添加班主任表单-->
@@ -85,7 +85,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="班主任姓名" label-width="150px" prop="teaName">
-            <el-input v-model="addTeaForm.teaName" autocomplete="off" placeholder="请输入班主任姓名" clearable></el-input>
+            <el-input v-model="addTeaForm.teaName" autocomplete="off" placeholder="请输入班主任姓名"
+                      clearable></el-input>
           </el-form-item>
           <el-form-item label="身份证" label-width="150px" prop="teaIdCard">
             <el-input v-model="addTeaForm.teaIdCard" autocomplete="off" placeholder="请输入身份证" clearable></el-input>
@@ -115,7 +116,8 @@
             <el-input v-model="editTeaForm.classNo" autocomplete="off" placeholder="请输入班号" disabled></el-input>
           </el-form-item>
           <el-form-item label="班主任姓名" label-width="150px" prop="teaName">
-            <el-input v-model="editTeaForm.teaName" autocomplete="off" placeholder="请输入班主任姓名" clearable></el-input>
+            <el-input v-model="editTeaForm.teaName" autocomplete="off" placeholder="请输入班主任姓名"
+                      clearable></el-input>
           </el-form-item>
           <el-form-item label="身份证" label-width="150px" prop="teaIdCard">
             <el-input v-model="editTeaForm.teaIdCard" autocomplete="off" placeholder="请输入身份证" disabled></el-input>
@@ -425,7 +427,7 @@ export default {
 
 .el-input {
   width: 400px;
-  margin-right:20px;
+  margin-right: 20px;
 }
 
 .el-button {

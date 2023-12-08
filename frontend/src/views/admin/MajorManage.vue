@@ -32,16 +32,16 @@
       </el-table>
     </div>
     <div class="page">
-      <el-pagination
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-          :pager-count="11"
-          background
-          :current-page="pageNum"
-          :page-size="pageSize"
-          :page-sizes="[5, 10, 20, 50,100]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
+      <el-pagination style="text-align: center"
+                     @current-change="handleCurrentChange"
+                     @size-change="handleSizeChange"
+                     :pager-count="11"
+                     background
+                     :current-page="pageNum"
+                     :page-size="pageSize"
+                     :page-sizes="[5, 10, 20, 50,100]"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
     </div>
     <!-- 添加或编辑专业表单-->
@@ -81,6 +81,7 @@
 <script>
 import axios from "axios";
 import service from "@/request";
+
 export default {
   name: "MajorManage",
   data() {
@@ -109,7 +110,7 @@ export default {
   },
   methods: {
     getMajorList() {
-      axios.get(service.baseURL+"/major/majorPageList?pageNum=" + this.pageNum +
+      axios.get(service.baseURL + "/major/majorPageList?pageNum=" + this.pageNum +
           "&pageSize=" + this.pageSize + "&majorName=" + this.majorName, {
         headers: {
           Authorization: this.$store.state.token
@@ -141,7 +142,7 @@ export default {
         } else {
           this.formVisible = true
           this.title = '编辑专业'
-          axios.get(service.baseURL+"/major/getByMajorId?majorId=" + row.majorId, {
+          axios.get(service.baseURL + "/major/getByMajorId?majorId=" + row.majorId, {
             headers: {
               Authorization: this.$store.state.token
             }
@@ -166,7 +167,7 @@ export default {
           type: "warning",
           center: true,
         }).then(() => {
-          axios.delete(service.baseURL+"/major/delById?majorId=" + row.majorId, {
+          axios.delete(service.baseURL + "/major/delById?majorId=" + row.majorId, {
             headers: {
               Authorization: this.$store.state.token
             }
@@ -192,11 +193,11 @@ export default {
     },
     handleSizeChange(pageSize) {
       this.pageSize = pageSize
-      this.pageNum=1
+      this.pageNum = 1
       this.getMajorList()
     },
     clearForm() {
-      this.majorForm={}
+      this.majorForm = {}
       this.$refs.majorFormRef.clearValidate()
     },
     cancelForm(title) {
@@ -211,7 +212,7 @@ export default {
     saveMajor(title) {
       this.$refs.majorFormRef.validate((valid) => {
         if (valid && title == '新增专业') {//如果表单的填写合法,发送axios请求
-          axios.post(service.baseURL+"/major/add", {
+          axios.post(service.baseURL + "/major/add", {
                 'majorName': this.majorForm.majorName,
               }, {
                 headers: {
@@ -229,7 +230,7 @@ export default {
             }
           })
         } else if (valid && title == '编辑专业') {
-          axios.put(service.baseURL+"/major/edit", {
+          axios.put(service.baseURL + "/major/edit", {
             'majorName': this.majorForm.majorName,
             'majorId': this.majorForm.majorId
           }, {
@@ -263,7 +264,7 @@ export default {
   margin: 20px auto;
 }
 
-.el-input,.el-button{
+.el-input, .el-button {
   margin-right: 20px;
 }
 </style>

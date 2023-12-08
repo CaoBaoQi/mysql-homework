@@ -8,7 +8,6 @@
       <el-button type="primary" @click="searchStuList" icon="el-icon-search">搜索</el-button>
       <el-button @click="resetStuList" icon="el-icon-refresh" style="margin-left:0">刷新</el-button>
       <el-button style="margin-left: 45px" type="primary" @click="openAddStu" icon="el-icon-plus">新增学生</el-button>
-      <a href="https://www.soba8.com/shenfenzheng/" style="text-decoration: none;color: purple" target="_blank">（样本数据）</a>
     </div>
     <div class="stuTable">
       <el-table :data="stuList" stripe size="small" style="width: 100%">
@@ -34,7 +33,7 @@
       </el-table>
     </div>
     <div class="page">
-      <el-pagination
+      <el-pagination style="text-align: center"
           @current-change="handleCurrentChange"
           @size-change="handleSizeChange"
           :pager-count="11"
@@ -574,7 +573,6 @@ export default {
 .findAdd {
   margin: 20px auto;
 }
-
 .el-input {
   width: 400px;
   margin-right: 20px;

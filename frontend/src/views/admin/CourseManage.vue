@@ -15,7 +15,8 @@
       </el-select>
       <el-button type="primary" @click="searchCourseList" icon="el-icon-search">搜索</el-button>
       <el-button @click="resetCourseList" icon="el-icon-refresh" style="margin-left: 0">刷新</el-button>
-      <el-button type="primary" @click="openAddCourseForm()" icon="el-icon-plus" style="margin-left: 70px">新增课程</el-button>
+      <el-button type="primary" @click="openAddCourseForm()" icon="el-icon-plus" style="margin-left: 70px">新增课程
+      </el-button>
     </div>
     <div class="classTable">
       <el-table :data="courseList" stripe size="small" style="width: 100%" :row-style="{ height:'40px'}">
@@ -46,16 +47,16 @@
       </el-table>
     </div>
     <div class="page">
-      <el-pagination
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-          :pager-count="11"
-          background
-          :current-page="pageNum"
-          :page-size="pageSize"
-          :page-sizes="[5, 10, 20, 50,100]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
+      <el-pagination style="text-align: center"
+                     @current-change="handleCurrentChange"
+                     @size-change="handleSizeChange"
+                     :pager-count="11"
+                     background
+                     :current-page="pageNum"
+                     :page-size="pageSize"
+                     :page-sizes="[5, 10, 20, 50,100]"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
     </div>
     <!-- 添加课程表单-->
@@ -389,7 +390,7 @@ export default {
   margin: 20px auto;
 }
 
-.el-input,.el-button,.el-select{
+.el-input, .el-button, .el-select {
   margin-right: 20px;
 }
 </style>

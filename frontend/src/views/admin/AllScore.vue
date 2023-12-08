@@ -45,7 +45,7 @@
       </el-table>
     </div>
     <div class="page">
-      <el-pagination
+      <el-pagination style="text-align: center"
           @current-change="handleCurrentChange"
           @size-change="handleSizeChange"
           :pager-count="11"
