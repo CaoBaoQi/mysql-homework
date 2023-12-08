@@ -47,27 +47,112 @@ public interface ICourseService extends IService<Course> {
      */
     void updateStuChooseNum(String courseId);
 
+    /**
+     * 通过专业 id 获取大四下课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList42(String majorId);
+    /**
+     * 通过专业 id 获取大三下课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList32(String majorId);
+    /**
+     * 通过专业 id 获取大二下课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList22(String majorId);
+    /**
+     * 通过专业 id 获取大一下课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList12(String majorId);
-
+    /**
+     * 通过专业 id 获取大四上课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList41(String majorId);
+    /**
+     * 通过专业 id 获取大三上课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList31(String majorId);
+    /**
+     * 通过专业 id 获取大二上课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList21(String majorId);
+    /**
+     * 通过专业 id 获取大一上课程数据 (选修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList11(String majorId);
+
     List<Course> courseList51(String majorId);
 
+
+    /**
+     * 通过专业 id 获取大四下课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList42Must(String majorId);
+    /**
+     * 通过专业 id 获取大三下课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList32Must(String majorId);
+    /**
+     * 通过专业 id 获取大二下课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList22Must(String majorId);
+    /**
+     * 通过专业 id 获取大一下课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList12Must(String majorId);
 
+    /**
+     * 通过专业 id 获取大四上课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList41Must(String majorId);
+    /**
+     * 通过专业 id 获取大三上课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList31Must(String majorId);
+    /**
+     * 通过专业 id 获取大二上课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList21Must(String majorId);
+    /**
+     * 通过专业 id 获取大一上课程数据 (必修)
+     * @param majorId majorId
+     * @return List<Course>
+     */
     List<Course> courseList11Must(String majorId);
+
     List<Course> courseList51Must(String majorId);
 
+    /**
+     * 更新选课数
+     */
     void updateChooseCourseNum();
 }

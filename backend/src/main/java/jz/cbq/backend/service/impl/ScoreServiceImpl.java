@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * AdminServiceImpl
+ * ScoreServiceImpl
  *
  * @author caobaoqi
  */
@@ -35,7 +35,7 @@ public class ScoreServiceImpl extends ServiceImpl<ScoreMapper, Score> implements
     @Async("taskExecutor")
     @Override
     public void updateStuName(String stuId, String stuName) {
-        System.out.println("线程" + Thread.currentThread().getName() + " 执行异步任务：更新分数表中学生："+stuId+"的姓名");
+        System.out.println("线程--" + Thread.currentThread().getName() + " 执行异步任务：更新分数表中学生："+stuId+" 的姓名");
          scoreMapper.updateStuName(stuId,stuName);
     }
 

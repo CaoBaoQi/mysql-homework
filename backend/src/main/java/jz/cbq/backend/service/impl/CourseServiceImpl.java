@@ -1,6 +1,5 @@
 package jz.cbq.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import jz.cbq.backend.entity.Course;
 import jz.cbq.backend.mapper.CourseMapper;
 import jz.cbq.backend.service.ICourseService;
@@ -12,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * AdminServiceImpl
+ * CourseServiceImpl
  *
  * @author caobaoqi
  */
@@ -143,7 +142,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Async("taskExecutor")
     @Override
     public void updateChooseCourseNum() {
-        System.out.println("线程" + Thread.currentThread().getName() + " 执行异步任务：置空课程表选课数");
+        System.out.println("线程--" + Thread.currentThread().getName() + "  执行异步任务：置空课程表选课数");
         courseMapper.updateChooseCourseNum();
     }
 }
