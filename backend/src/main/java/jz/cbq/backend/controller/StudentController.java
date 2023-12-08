@@ -80,7 +80,7 @@ public class StudentController {
             student.setTeaName("");
             student.setTeaId("");
         } else {
-            Teacher teacher = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getClassId, classId).last("limit 1"));
+            Teacher teacher = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getClassId, classId).last("LIMIT 1"));
             student.setTeaId(teacher.getTeaId());
             student.setTeaName(teacher.getTeaName());
         }
@@ -138,16 +138,16 @@ public class StudentController {
     @Transactional
     @DeleteMapping("/delete")
     public Result<String> deleteStu(String stuId) {
-        Score scoreDatabase = scoreService.getOne(new LambdaQueryWrapper<Score>().eq(Score::getStuId, stuId));
-        StuMessage stuMessageDatabase = stuMessageService.getOne(new LambdaQueryWrapper<StuMessage>().eq(StuMessage::getStuId, stuId));
-        TeaMessage teaMessageDatabase = teaMessageService.getOne(new LambdaQueryWrapper<TeaMessage>().eq(TeaMessage::getStuId, stuId));
-        ChooseCourse chooseCourseDatabase = chooseCourseService.getOne(new LambdaQueryWrapper<ChooseCourse>().eq(ChooseCourse::getStuId, stuId));
+        Score scoreDatabase = scoreService.getOne(new LambdaQueryWrapper<Score>().eq(Score::getStuId, stuId).last("LIMIT 1"));
+        StuMessage stuMessageDatabase = stuMessageService.getOne(new LambdaQueryWrapper<StuMessage>().eq(StuMessage::getStuId, stuId).last("LIMIT 1"));
+        TeaMessage teaMessageDatabase = teaMessageService.getOne(new LambdaQueryWrapper<TeaMessage>().eq(TeaMessage::getStuId, stuId).last("LIMIT 1"));
+        ChooseCourse chooseCourseDatabase = chooseCourseService.getOne(new LambdaQueryWrapper<ChooseCourse>().eq(ChooseCourse::getStuId, stuId).last("LIMIT 1"));
 
-        if (scoreDatabase == null) {
+        if (scoreDatabase != null) {
             return Result.fail("该学生还有成绩数据,无法删除");
-        } else if (stuMessageDatabase == null || teaMessageDatabase == null) {
+        } else if (stuMessageDatabase != null || teaMessageDatabase != null) {
             return Result.fail("该学生还有消息数据,无法删除");
-        } else if (chooseCourseDatabase == null) {
+        } else if (chooseCourseDatabase != null) {
             return Result.fail("该学生还有选课数据,无法删除");
         }
 
