@@ -6,41 +6,40 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jz.cbq.backend.vo.Result;
 import jz.cbq.backend.entity.Major;
-import jz.cbq.backend.service.IClassService;
-import jz.cbq.backend.service.ICourseService;
 import jz.cbq.backend.service.IMajorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * AdminController
+ * MajorController
  *
  * @author caobaoqi
  */
 @RestController
 @RequestMapping("/major")
 public class MajorController {
-    @Autowired
+    @Resource
     private IMajorService majorService;
-    @Autowired
-    ICourseService courseService;
-    @Autowired
-    IClassService classService;
+
+    /**
+     * 添加专业
+     *
+     * @param major major
+     * @return INFO
+     */
     @PostMapping("/add")
-    public Result addMajor(@RequestBody Major major){
-        LambdaQueryWrapper<Major> majorQueryWrapper = new LambdaQueryWrapper<>();
-        majorQueryWrapper.eq(Major::getMajorName,major.getMajorName()).last("limit 1");
-        Major one = majorService.getOne(majorQueryWrapper);
-        if (null!=one){
+    public Result<String> addMajor(@RequestBody Major major) {
+        Major one = majorService.getOne(new LambdaQueryWrapper<Major>().eq(Major::getMajorName, major.getMajorName()).last("LIMIT 1"));
+        if (one != null) {
             return Result.fail("该专业已存在");
         }
-        String nextMajorId=majorService.findNextMajorId();
+        String nextMajorId = majorService.findNextMajorId();
         major.setMajorId(nextMajorId);
         major.setCreateTime(new Date());
         major.setClassTotal(0);
@@ -48,54 +47,74 @@ public class MajorController {
         major.setStuTotal(0);
         major.setTeaTotal(0);
         boolean save = majorService.save(major);
-        if (save){
-            return Result.success("添加专业成功");
-        }
-        return Result.fail("添加专业失败");
+
+        return save ? Result.success("添加专业成功") : Result.fail("添加专业失败");
     }
+
+    /**
+     * 通过 id 获取专业
+     *
+     * @param majorId majorId
+     * @return Major
+     */
     @GetMapping("getByMajorId")
-    public Result getByMajorId(String majorId){
-        LambdaQueryWrapper<Major> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Major::getMajorId,majorId).last("limit 1");
-        Major major = majorService.getOne(queryWrapper);
-        if (null!=major){
-            return Result.success(major);
-        }
-        return Result.fail("打开编辑表单失败");
+    public Result<Major> getByMajorId(String majorId) {
+        Major major = majorService.getOne(new LambdaQueryWrapper<Major>().eq(Major::getMajorId, majorId).last("LIMIT 1"));
+
+        return major != null ? Result.success(major) : Result.fail("获取专业失败");
     }
+
+    /**
+     * 编辑专业
+     *
+     * @param major major
+     * @return INFO
+     */
     @PutMapping("/edit")
-    public Result editMajor(@RequestBody Major major){
-        LambdaUpdateWrapper<Major> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(Major::getMajorName,major.getMajorName()).eq(Major::getMajorId,major.getMajorId());
-        boolean update = majorService.update(updateWrapper);
-        if (update){
-            return Result.success("编辑专业成功");
-        }
-        return Result.fail("编辑专业失败");
+    public Result<String> editMajor(@RequestBody Major major) {
+        boolean update = majorService.update(new LambdaUpdateWrapper<Major>().set(Major::getMajorName, major.getMajorName()).eq(Major::getMajorId, major.getMajorId()));
+
+        return update ? Result.success("编辑专业成功") : Result.fail("编辑专业失败");
     }
+
+    /**
+     * 条件分页查询专业信息
+     *
+     * @param pageNum   pageNum
+     * @param pageSize  pageSize
+     * @param majorName majorName
+     * @return Map<String, Object>
+     */
     @GetMapping("/majorPageList")
-    public Result majorPageList(int pageNum, int pageSize,@RequestParam(value = "majorName", required = false) String majorName){
+    public Result<Map<String, Object>> majorPageList(int pageNum, int pageSize, @RequestParam(value = "majorName", required = false) String majorName) {
         Map<String, Object> data = new HashMap<>();
         Page<Major> page = new Page<>(pageNum, pageSize);
-        LambdaQueryWrapper<Major> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.hasLength(majorName), Major::getMajorName, majorName).orderByDesc(Major::getCreateTime);
-        majorService.page(page,queryWrapper);
-        data.put("majorList",page.getRecords());
-        data.put("total",page.getTotal());
+        majorService.page(page, new LambdaQueryWrapper<Major>().like(StringUtils.hasLength(majorName), Major::getMajorName, majorName).orderByDesc(Major::getCreateTime));
+        data.put("majorList", page.getRecords());
+        data.put("total", page.getTotal());
         return Result.success(data);
     }
+
+    /**
+     * 根据 id 删除专业
+     *
+     * @param majorId majorId
+     * @return INFO
+     */
     @DeleteMapping("/delById")
-    public Result delById(String majorId){
-        LambdaQueryWrapper<Major> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Major::getMajorId,majorId);
-        boolean remove = majorService.remove(queryWrapper);
-        if (remove){
-            return Result.success("删除专业成功");
-        }
-        return Result.fail("删除专业失败");
+    public Result<String> delById(String majorId) {
+        boolean remove = majorService.remove(new LambdaQueryWrapper<Major>().eq(Major::getMajorId, majorId));
+
+        return remove ? Result.success("删除专业成功") : Result.fail("删除专业失败");
     }
+
+    /**
+     * 获取所有专业名称
+     *
+     * @return List<Major>
+     */
     @GetMapping("/getAllMajorName")
-    public Result getAllMajorName(){
+    public Result<List<Major>> getAllMajorName() {
         List<Major> majorList = majorService.list();
         return Result.success(majorList);
     }
