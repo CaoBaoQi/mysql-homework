@@ -13,159 +13,152 @@ import jz.cbq.backend.service.IClassService;
 import jz.cbq.backend.service.IMajorService;
 import jz.cbq.backend.service.IStudentService;
 import jz.cbq.backend.service.ITeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * AdminController
+ * TeacherController
  *
  * @author caobaoqi
  */
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
-    @Autowired
+    @Resource
     private ITeacherService teacherService;
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
-    @Autowired
+    @Resource
     private IStudentService studentService;
-    @Autowired
+    @Resource
     private IClassService classService;
-    @Autowired
+    @Resource
     private IMajorService majorService;
+
+    /**
+     * 条件老师
+     *
+     * @param teacher teacher
+     * @return INFO
+     */
     @Transactional
-    @PostMapping("add")//同步更新专业表的班主任数量，以及班级表和学生表的班主任姓名
-    public Result addTea(@RequestBody Teacher teacher) {
-        //对应专业班主任数量+1，对应班级的班主任更新
+    @PostMapping("add")
+    public Result<String> addTea(@RequestBody Teacher teacher) {
         String classYear = teacher.getClassYear();
         String majorName = teacher.getMajorName();
-        String classId = teacher.getClassId();//2020031
+        String classId = teacher.getClassId();
         String teaName = teacher.getTeaName();
         String teaIdCard = teacher.getTeaIdCard();
-        teacher.setClassName(classYear + "级" + majorName + classId.substring(6, 7) + "班");
+        teacher.setClassName(classYear + "级" + majorName + classId.charAt(6) + "班");
         String className = teacher.getClassName();
 
-        LambdaQueryWrapper<Teacher> queryWrapper1 = new LambdaQueryWrapper<>();
-        queryWrapper1.eq(Teacher::getClassId, classId);
-        Teacher one = teacherService.getOne(queryWrapper1);
-        //这一步前端已解决，切换专业，班号不变
-        LambdaQueryWrapper<Teacher> queryWrapper2 = new LambdaQueryWrapper<>();
-        queryWrapper2.eq(Teacher::getClassName, className);
-        Teacher one2 = teacherService.getOne(queryWrapper2);
+        Teacher one = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getClassId, classId));
+        Teacher one1 = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeaIdCard, teaIdCard).last("LIMIT 1"));
+        Teacher one2 = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getClassName, className));
+        Student student = studentService.getOne(new LambdaQueryWrapper<Student>().eq(Student::getStuIdCard, teaIdCard).last("LIMIT 1"));
+
         if (null != one || null != one2) {
             return Result.fail("该班级已有班主任");
-        }
-        LambdaQueryWrapper<Teacher> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Teacher::getTeaIdCard, teaIdCard).last("limit 1");
-        Teacher one1 = teacherService.getOne(queryWrapper);
-        if (null != one1) {
+        } else if (null != one1) {
             return Result.fail("该用户已注册班主任编号");
-        }
-        LambdaQueryWrapper<Student> stuQueryWrapper = new LambdaQueryWrapper<>();
-        stuQueryWrapper.eq(Student::getStuIdCard, teaIdCard).last("limit 1");
-        Student student = studentService.getOne(stuQueryWrapper);
-        if (null != student) {
+        } else if (null != student) {
             return Result.fail("该用户已注册学生");
         }
+
         teacher.setTeaId("tea" + classId);
         teacher.setMajorId(classId.substring(4, 6));
         teacher.setCreateTime(new Date());
         teacher.setClassNo(classId.substring(6, 7));
-        teacher.setTeaPwd(passwordEncoder.encode(teacher.getTeaIdCard().substring(12, 18)));//设置密码
+        teacher.setTeaPwd(passwordEncoder.encode(teacher.getTeaIdCard().substring(12, 18)));
         boolean save = teacherService.save(teacher);
         if (save) {
-            LambdaUpdateWrapper<Student> stuUpdateWrapper = new LambdaUpdateWrapper<>();
-            stuUpdateWrapper.set(Student::getTeaName,teaName).set(Student::getTeaId,teacher.getTeaId()).eq(Student::getClassId,classId);
-            studentService.update(stuUpdateWrapper);
-
-            LambdaUpdateWrapper<Class> classUpdateWrapper = new LambdaUpdateWrapper<>();
-            classUpdateWrapper.set(Class::getTeaName, teacher.getTeaName()).eq(Class::getClassId, classId);
-            classService.update(classUpdateWrapper);
-
-            LambdaUpdateWrapper<Major> majorUpdateWrapper = new LambdaUpdateWrapper<>();
-            majorUpdateWrapper.setSql("tea_total=tea_total+1").eq(Major::getMajorId, teacher.getMajorId());
-            majorService.update(majorUpdateWrapper);
+            studentService.update(new LambdaUpdateWrapper<Student>().set(Student::getTeaName, teaName).set(Student::getTeaId, teacher.getTeaId()).eq(Student::getClassId, classId));
+            classService.update(new LambdaUpdateWrapper<Class>().set(Class::getTeaName, teacher.getTeaName()).eq(Class::getClassId, classId));
+            majorService.update(new LambdaUpdateWrapper<Major>().setSql("tea_total=tea_total+1").eq(Major::getMajorId, teacher.getMajorId()));
 
             return Result.success("添加班主任成功,班主任编号为" + teacher.getTeaId());
         }
         return Result.fail("添加班主任失败");
     }
 
+    /**
+     * 条件分页查询老师信息
+     *
+     * @param pageNum   pageNum
+     * @param pageSize  pageSize
+     * @param teaId     teaId
+     * @param teaName   teaName
+     * @param className className
+     * @return Map<String, Object>
+     */
     @GetMapping("/teaPageList")
-    public Result teaPageList(int pageNum, int pageSize, @RequestParam(value = "teaId", required = false) String teaId,
-                              @RequestParam(value = "teaName", required = false) String teaName,
-                              @RequestParam(value = "className", required = false) String className) {
+    public Result<Map<String, Object>> teaPageList(int pageNum, int pageSize, @RequestParam(value = "teaId", required = false) String teaId,
+                                                   @RequestParam(value = "teaName", required = false) String teaName,
+                                                   @RequestParam(value = "className", required = false) String className) {
         Map<String, Object> data = new HashMap<>();
         Page<Teacher> page = new Page<>(pageNum, pageSize);
-        LambdaQueryWrapper<Teacher> teaQueryWrapper = new LambdaQueryWrapper<>();
-        teaQueryWrapper.like(StringUtils.hasLength(teaName), Teacher::getTeaName, teaName)
-                .like(StringUtils.hasLength(teaId), Teacher::getTeaId, teaId)
-                .like(StringUtils.hasLength(className), Teacher::getClassName, className)
-                .orderByDesc(Teacher::getCreateTime);
-        teacherService.page(page, teaQueryWrapper);
+        teacherService.page(page,
+                new LambdaQueryWrapper<Teacher>().like(StringUtils.hasLength(teaName), Teacher::getTeaName, teaName)
+                        .like(StringUtils.hasLength(teaId), Teacher::getTeaId, teaId)
+                        .like(StringUtils.hasLength(className), Teacher::getClassName, className)
+                        .orderByDesc(Teacher::getCreateTime));
         data.put("teaList", page.getRecords());
         data.put("total", page.getTotal());
         return Result.success(data);
     }
 
-    @GetMapping("/getTeaById")//初始化班主任个人信息维护
-    public Result getTeaById(String teaId) {
-        LambdaQueryWrapper<Teacher> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Teacher::getTeaId, teaId).last("limit 1");
-        Teacher one = teacherService.getOne(queryWrapper);
-        if (null != one) {
-            return Result.success(one);
-        }
-        return Result.fail("打开编辑表单失败");
+    /**
+     * 通过 id 获取老师
+     *
+     * @param teaId teaId
+     * @return Teacher
+     */
+    @GetMapping("/getTeaById")
+    public Result<Teacher> getTeaById(String teaId) {
+        Teacher one = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeaId, teaId).last("LIMIT 1"));
+
+        return one != null ? Result.success(one) : Result.fail("打开编辑表单失败");
     }
 
-    @PutMapping("/editById")//级联更新班级表和学生表的班主任姓名
-    public Result editById(@RequestBody Teacher teacher) {//只能改班主任名字，密码，级联更新学生表，班级表的班主任姓名
-        LambdaUpdateWrapper<Teacher> teacherUpdateWrapper = new LambdaUpdateWrapper<>();
-        teacherUpdateWrapper.eq(Teacher::getTeaId, teacher.getTeaId());
-        teacher.setTeaPwd(passwordEncoder.encode(teacher.getTeaPwd()));//从表单获取密码并更新密码
-        boolean update = teacherService.update(teacher, teacherUpdateWrapper);
+    /**
+     * 编辑老师
+     *
+     * @param teacher teacher
+     * @return INFO
+     */
+    @PutMapping("/editById")
+    public Result<String> editById(@RequestBody Teacher teacher) {
+        teacher.setTeaPwd(passwordEncoder.encode(teacher.getTeaPwd()));
+        boolean update = teacherService.update(teacher, new LambdaUpdateWrapper<Teacher>().eq(Teacher::getTeaId, teacher.getTeaId()));
         if (update) {
-            //级联更新
-            LambdaUpdateWrapper<Class> classUpdateWrapper = new LambdaUpdateWrapper<>();
-            classUpdateWrapper.set(Class::getTeaName,teacher.getTeaName()).eq(Class::getClassId,teacher.getClassId());
-            classService.update(classUpdateWrapper);
-
-            LambdaUpdateWrapper<Student> stuUpdateWrapper = new LambdaUpdateWrapper<>();
-            stuUpdateWrapper.set(Student::getTeaName,teacher.getTeaName()).eq(Student::getTeaId,teacher.getTeaId());
-            studentService.update(stuUpdateWrapper);
-
+            classService.update(new LambdaUpdateWrapper<Class>().set(Class::getTeaName, teacher.getTeaName()).eq(Class::getClassId, teacher.getClassId()));
+            studentService.update(new LambdaUpdateWrapper<Student>().set(Student::getTeaName, teacher.getTeaName()).eq(Student::getTeaId, teacher.getTeaId()));
             return Result.success("编辑成功");
         }
         return Result.fail("编辑失败");
     }
+
+    /**
+     * 根据 id 删除老师
+     *
+     * @param teaId teaId
+     * @return INFO
+     */
     @DeleteMapping("/delTea")
-    public Result delTea(String teaId){
-        LambdaQueryWrapper<Teacher> teaQueryWrapper = new LambdaQueryWrapper<>();
-        teaQueryWrapper.eq(Teacher::getTeaId,teaId);
-        Teacher teacher = teacherService.getOne(teaQueryWrapper);
-        boolean remove = teacherService.remove(teaQueryWrapper);
-        if (remove){
-            LambdaUpdateWrapper<Student> stuUpdateWrapper = new LambdaUpdateWrapper<>();
-            stuUpdateWrapper.set(Student::getTeaName,"").set(Student::getTeaId,"").eq(Student::getTeaId,teaId);
-            studentService.update(stuUpdateWrapper);
-
-            LambdaUpdateWrapper<Class> classUpdateWrapper = new LambdaUpdateWrapper<>();
-            classUpdateWrapper.set(Class::getTeaName,"").eq(Class::getClassId, teacher.getClassId());
-            classService.update(classUpdateWrapper);
-
-            LambdaUpdateWrapper<Major> majorUpdateWrapper = new LambdaUpdateWrapper<>();
-            majorUpdateWrapper.setSql("tea_total=tea_total-1").eq(Major::getMajorId, teacher.getMajorId());
-            majorService.update(majorUpdateWrapper);
-
+    public Result<String> delTea(String teaId) {
+        Teacher teacher = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeaId, teaId));
+        boolean remove = teacherService.remove(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeaId, teaId));
+        if (remove) {
+            studentService.update(new LambdaUpdateWrapper<Student>().set(Student::getTeaName, "").set(Student::getTeaId, "").eq(Student::getTeaId, teaId));
+            classService.update(new LambdaUpdateWrapper<Class>().set(Class::getTeaName, "").eq(Class::getClassId, teacher.getClassId()));
+            majorService.update(new LambdaUpdateWrapper<Major>().setSql("tea_total=tea_total-1").eq(Major::getMajorId, teacher.getMajorId()));
             return Result.success("删除班主任成功");
         }
         return Result.fail("删除班主任失败");
