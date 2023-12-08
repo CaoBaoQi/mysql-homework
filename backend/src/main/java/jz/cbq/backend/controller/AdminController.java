@@ -1,18 +1,17 @@
 package jz.cbq.backend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import jz.cbq.backend.entity.*;
 import jz.cbq.backend.service.*;
 import jz.cbq.backend.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -107,12 +106,11 @@ public class AdminController {
         Long start = System.currentTimeMillis();
         List<Major> majorList = majorService.list();
 
-        int nowYear = new Date().getYear() + 1900;//2023
-        int nowMonth = new Date().getMonth() + 1;//4
+        int nowYear = LocalDate.now().getYear() + 1900;
+        int nowMonth = LocalDate.now().getMonthValue() + 1;
 
 
-        if (nowMonth >= 3 || nowMonth < 9) {
-            //下学期
+        if (nowMonth >= 3 && nowMonth < 9) {
             for (Major major : majorList) {
                 List<Student> studentList42 = studentService.studentList42(nowYear, major.getMajorId());//大四下
                 List<Student> studentList32 = studentService.studentList32(nowYear, major.getMajorId());//大三下
@@ -129,7 +127,6 @@ public class AdminController {
                 listChooseCourse(studentList12, courseList12Must);
             }
         } else {
-            //上学期
             for (Major major : majorList) {
                 List<Student> studentList51 = studentService.studentList51(nowYear, major.getMajorId());
                 List<Student> studentList41 = studentService.studentList41(nowYear, major.getMajorId());//大四上
