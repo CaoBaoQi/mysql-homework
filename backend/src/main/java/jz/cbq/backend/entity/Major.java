@@ -15,7 +15,6 @@ import lombok.Data;
  * @author caobaoqi
  */
 @Data
-@TableName("t_major")
 @ApiModel(value = "专业")
 public class Major implements Serializable {
     private static final long serialVersionUID = 1L;

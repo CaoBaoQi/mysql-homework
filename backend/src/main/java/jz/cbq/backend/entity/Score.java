@@ -15,7 +15,6 @@ import lombok.Data;
  * @author caobaoqi
  */
 @Data
-@TableName("t_score")
 @ApiModel(value = "成绩")
 public class Score implements Serializable {
     private static final long serialVersionUID = 1L;

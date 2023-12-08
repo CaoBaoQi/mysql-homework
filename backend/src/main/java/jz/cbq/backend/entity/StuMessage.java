@@ -13,7 +13,6 @@ import lombok.Data;
  * @author caobaoqi
  */
 @Data
-@TableName("t_stu_message")
 @ApiModel(value = "学生信息")
 public class StuMessage implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -12,7 +12,6 @@ import java.util.Date;
  * @author caobaoqi
  */
 @Data
-@TableName("t_choose_course")
 @ApiModel(value = "选课")
 public class ChooseCourse {
     /**

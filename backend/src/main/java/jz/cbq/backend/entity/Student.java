@@ -13,7 +13,6 @@ import lombok.Data;
  *
  * @author caobaoqi
  */
-@TableName("t_student")
 @Data
 @ApiModel(value = "学生")
 public class Student implements Serializable {

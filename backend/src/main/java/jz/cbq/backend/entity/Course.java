@@ -13,7 +13,6 @@ import lombok.Data;
  *
  * @author caobaoqi
  */
-@TableName("t_course")
 @Data
 @ApiModel(value = "课程")
 public class Course implements Serializable {
