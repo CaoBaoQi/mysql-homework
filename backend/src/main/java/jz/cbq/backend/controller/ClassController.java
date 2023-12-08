@@ -3,109 +3,140 @@ package jz.cbq.backend.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jz.cbq.backend.entity.Student;
+import jz.cbq.backend.entity.Teacher;
+import jz.cbq.backend.service.IStudentService;
+import jz.cbq.backend.service.ITeacherService;
 import jz.cbq.backend.vo.Result;
 import jz.cbq.backend.entity.Class;
 import jz.cbq.backend.entity.Major;
 import jz.cbq.backend.service.IClassService;
 import jz.cbq.backend.service.IMajorService;
-import jz.cbq.backend.service.ITeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * AdminController
+ * ClassController
  *
  * @author caobaoqi
  */
 @RestController
 @RequestMapping("/class")
 public class ClassController {
-    @Autowired
+    @Resource
     private IMajorService majorService;
-    @Autowired
-    private IClassService classService;
-    @Autowired
+    @Resource
     private ITeacherService teacherService;
+    @Resource
+    private IStudentService studentService;
+    @Resource
+    private IClassService classService;
+
+    /**
+     * 添加班级
+     *
+     * @param data data
+     * @return INFO
+     */
     @Transactional
     @PostMapping("/add")
-    public Result addClass(@RequestBody Class class1){
-        //根据专业名查询出专业=>专业编号
-        LambdaQueryWrapper<Major> majorQueryWrapper = new LambdaQueryWrapper<>();
-        majorQueryWrapper.eq(Major::getMajorName,class1.getMajorName()).last("limit 1");
-        Major major = majorService.getOne(majorQueryWrapper);//根据专业名查出专业编号01、02、03
-        //根据专业编号查询下一个班级编号
-        LambdaQueryWrapper<Class> classQueryWrapper = new LambdaQueryWrapper<>();
-        classQueryWrapper.likeRight(Class::getClassId,class1.getClassYear()+major.getMajorId()).orderByDesc(Class::getClassId).last("limit 1");
-        Class maxClass = classService.getOne(classQueryWrapper);//2020 022
-        if (null!=maxClass){
-            class1.setClassId(Integer.valueOf(maxClass.getClassId())+1+"");//202051
+    public Result<String> addClass(@RequestBody Class data) {
+        Major major = majorService.getOne(new LambdaQueryWrapper<Major>().eq(Major::getMajorName, data.getMajorName()).last("LIMIT 1"));
+        Class maxClass = classService.getOne(new LambdaQueryWrapper<Class>().likeRight(Class::getClassId, data.getClassYear() + major.getMajorId()).orderByDesc(Class::getClassId).last("LIMIT 1"));
+        if (maxClass != null) {
+            data.setClassId(Integer.valueOf(maxClass.getClassId()) + 1 + "");
+        } else {
+            data.setClassId(data.getClassYear() + major.getMajorId() + "1");
         }
-        else {
-            class1.setClassId(class1.getClassYear()+major.getMajorId()+"1");//置1
-        }
-        class1.setClassName(class1.getClassYear()+"级"+class1.getMajorName()+class1.getClassId().substring(6,7)+"班");
-        class1.setCreateTime(new Date());
-        class1.setMajorId(major.getMajorId());
-        class1.setStuTotal(0);
-        boolean save = classService.save(class1);
-        if (save){
-            LambdaUpdateWrapper<Major> majorUpdateWrapper = new LambdaUpdateWrapper<>();//设置对应专业的班级数+1
-            majorUpdateWrapper.setSql("class_total=class_total+1").eq(Major::getMajorName,class1.getMajorName());
-            majorService.update(majorUpdateWrapper);
+        data.setClassName(data.getClassYear() + "级" + data.getMajorName() + data.getClassId().charAt(6) + "班");
+        data.setCreateTime(new Date());
+        data.setMajorId(major.getMajorId());
+        data.setStuTotal(0);
+        boolean save = classService.save(data);
+        if (save) {
+            majorService.update(new LambdaUpdateWrapper<Major>().setSql("class_total=class_total+1").eq(Major::getMajorName, data.getMajorName()));
             return Result.success("添加班级成功");
         }
         return Result.fail("添加班级失败");
     }
+
+    /**
+     * 条件分页展示班级信息
+     *
+     * @param pageNum   pageNum
+     * @param pageSize  pageSize
+     * @param className className
+     * @param teaName   teaName
+     * @return Map<String, Object>
+     */
     @GetMapping("/classPageList")
-    public Result classPageList(int pageNum, int pageSize,@RequestParam(value = "className", required = false) String className,
-                                @RequestParam(value = "teaName", required = false) String teaName){
+    public Result<Map<String, Object>> classPageList(int pageNum, int pageSize, @RequestParam(value = "className", required = false) String className,
+                                                     @RequestParam(value = "teaName", required = false) String teaName) {
         Map<String, Object> data = new HashMap<>();
         Page<Class> page = new Page<>(pageNum, pageSize);
-        LambdaQueryWrapper<Class> classQueryWrapper = new LambdaQueryWrapper<>();
-        classQueryWrapper.like(StringUtils.hasLength(className), Class::getClassName, className)
-                .like(StringUtils.hasLength(teaName),Class::getTeaName,teaName).orderByDesc(Class::getCreateTime);
-        classService.page(page,classQueryWrapper);
-        data.put("classList",page.getRecords());
-        data.put("total",page.getTotal());
-        if (data.size()==0){
+
+        Page<Class> paged = classService.page(page, new LambdaQueryWrapper<Class>().like(StringUtils.hasLength(className), Class::getClassName, className)
+                .like(StringUtils.hasLength(teaName), Class::getTeaName, teaName).orderByDesc(Class::getCreateTime));
+        if (paged != null) {
+            data.put("classList", page.getRecords());
+            data.put("total", page.getTotal());
+        }
+        if (data.keySet().isEmpty()) {
             return Result.fail("分页查询班级失败");
         }
         return Result.success(data);
     }
+
+    /**
+     * 通过 id 删除老师
+     *
+     * @param classId classId
+     * @return INFO
+     */
     @Transactional
     @DeleteMapping("/delClassById")
-    public Result delClassById(String classId){
-//        LambdaQueryWrapper<Teacher> teaQueryWrapper = new LambdaQueryWrapper<>();
-//        teaQueryWrapper.eq(Teacher::getClassId,classId);
-//        Teacher teacher = teacherService.getOne(teaQueryWrapper);
-//        if (null!=teacher){
-//            return Result.fail("改班级还有班主任无法删除");
-//        }
-        LambdaQueryWrapper<Class> classQueryWrapper = new LambdaQueryWrapper<>();
-        classQueryWrapper.eq(Class::getClassId,classId);
-        Class class1 = classService.getOne(classQueryWrapper);
-        boolean remove = classService.remove(classQueryWrapper);
-        if (remove){
-            LambdaUpdateWrapper<Major> majorUpdateWrapper = new LambdaUpdateWrapper<>();
-            majorUpdateWrapper.setSql("class_total=class_total-1").eq(Major::getMajorId,class1.getMajorId());
-            majorService.update(majorUpdateWrapper);
+    public Result<String> delClassById(String classId) {
+        Teacher teacher = teacherService.getOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getClassId, classId).last("LIMIT 1"));
+        Student student = studentService.getOne(new LambdaQueryWrapper<Student>().eq(Student::getClassId, classId).last("LIMIT 1"));
+        if (student != null) {
+            Major major = majorService.getOne(new LambdaQueryWrapper<Major>().eq(Major::getMajorName, student.getMajorName()).gt(Major::getClassTotal, 0).last("LIMIT 1"));
+            if (major != null) {
+                return Result.fail("该班级还有专业数据,无法删除");
+            }
+        }
+        if (teacher != null) {
+            return Result.fail("该班级还有老师数据,无法删除");
+        } else if (student != null) {
+            return Result.fail("该班级还有学生数据,无法删除");
+        }
+
+        Class serviceOne = classService.getOne(new LambdaQueryWrapper<Class>().eq(Class::getClassId, classId));
+        boolean remove = classService.remove(new LambdaQueryWrapper<Class>().eq(Class::getClassId, classId));
+        if (remove) {
+            majorService.update(new LambdaUpdateWrapper<Major>().setSql("class_total=class_total-1").eq(Major::getMajorId, serviceOne.getMajorId()));
             return Result.success("删除班级成功");
         }
         return Result.fail("删除班级失败");
     }
+
+    /**
+     * 根据专业名称获取班级列表
+     *
+     * @param majorName majorName
+     * @param classYear classYear
+     * @return List<Class>
+     */
     @GetMapping("getClassesByMajorName")
-    public Result getClassesByMajorName(String majorName,String classYear){
-        LambdaQueryWrapper<Class> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Class::getMajorName,majorName).eq(Class::getClassYear,classYear);
-        List<Class> classes = classService.list(queryWrapper);
-        return Result.success(classes);
+    public Result<List<Class>> getClassesByMajorName(String majorName, String classYear) {
+        List<Class> classList = classService.list(new LambdaQueryWrapper<Class>().eq(Class::getMajorName, majorName).eq(Class::getClassYear, classYear));
+        return Result.success(classList);
     }
 
 }
