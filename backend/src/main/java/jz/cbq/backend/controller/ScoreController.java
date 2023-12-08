@@ -11,7 +11,6 @@ import jz.cbq.backend.service.IChooseCourseService;
 import jz.cbq.backend.service.ICourseService;
 import jz.cbq.backend.service.IScoreService;
 import jz.cbq.backend.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
