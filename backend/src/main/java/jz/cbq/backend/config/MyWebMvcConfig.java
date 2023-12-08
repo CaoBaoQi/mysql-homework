@@ -1,11 +1,12 @@
 package jz.cbq.backend.config;
 
 import jz.cbq.backend.utils.LoginInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * WebMVC 配置类
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyWebMvcConfig implements WebMvcConfigurer {
-    @Autowired
+    @Resource
     private LoginInterceptor loginInterceptor;
 
     /**
