@@ -1,4 +1,4 @@
-package jz.cbq.backend.utils;
+package jz.cbq.backend.exception;
 
 import jz.cbq.backend.vo.Result;
 import lombok.extern.slf4j.Slf4j;
