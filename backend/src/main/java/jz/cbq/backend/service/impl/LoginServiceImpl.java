@@ -19,7 +19,7 @@ public class LoginServiceImpl implements ILoginService {
     @Async("taskExecutor")
     @Override
     public void logout(String token) {
-        System.out.println("线程" + Thread.currentThread().getName() + " 执行异步任务：从 redis 中删除 token");
+        System.out.println("线程 --" + Thread.currentThread().getName() + " 执行异步任务：从 redis 中删除 token");
         redisTemplate.delete(token);
     }
 }

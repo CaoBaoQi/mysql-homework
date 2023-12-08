@@ -19,27 +19,31 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Resource
     private AdminMapper adminMapper;
 
-
+    /**
+     * 获取下一个 id
+     * @return id
+     */
     @Override
     public String getNextId() {
         String nowYear = Calendar.getInstance().get(Calendar.YEAR) + "";
         String maxId = getMaxId();
-        int nextNum = 1;
+        int nextNum;
         if (null != maxId) {
             String maxYear = maxId.substring(3, 7);
             if (nowYear.equals(maxYear)) {
                 nextNum = Integer.parseInt(maxId.substring(7, 9)) + 1;
-                System.out.println("下一个编号是：" + nextNum);
-                System.out.println(nowYear + String.format("%02d", Integer.valueOf(nextNum)));
-                return "gly" + nowYear + String.format("%02d", Integer.valueOf(nextNum));
+                return nowYear + String.format("%02d", nextNum);
             } else {
-                return "gly" + nowYear + "01";
+                return nowYear + "01";
             }
         }
-        return "gly" + nowYear + "01";
+        return nowYear + "01";
     }
 
-
+    /**
+     * 获取 MaxID
+     * @return id
+     */
     public String getMaxId() {
         return adminMapper.getMaxId();
     }

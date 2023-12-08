@@ -28,69 +28,83 @@ import java.util.Random;
 public class AdminController {
     @Value("${adminSecret}")
     private String adminSecret;
-    @Autowired
+    @Resource
     private IAdminService adminService;
     @Resource
     private PasswordEncoder passwordEncoder;
-    @Autowired
+    @Resource
     private IStudentService studentService;
-    @Autowired
+    @Resource
     private ICourseService courseService;
-    @Autowired
+    @Resource
     private IMajorService majorService;
-    @Autowired
+    @Resource
     private IChooseCourseService chooseCourseService;
-    @Autowired
+    @Resource
     private IScoreService scoreService;
-    @Autowired
+    @Resource
     private ILoginService loginService;
+
+    /**
+     * 添加管理员
+     *
+     * @param admin       admin
+     * @param adminSecret Secret
+     * @return INFO
+     */
     @PostMapping("/add")
-    public Result addAdmin(@RequestBody Admin admin, String adminSecret) {
+    public Result<String> addAdmin(@RequestBody Admin admin, String adminSecret) {
         if (adminSecret.equals(this.adminSecret)) {
             String adminId = adminService.getNextId();
             admin.setAdminId(adminId);
             admin.setAdminPwd(passwordEncoder.encode(admin.getAdminPwd()));
             admin.setCreateTime(new Date());
             boolean save = adminService.save(admin);
-            if (save) {
-                return Result.success("注册管理员成功,你的管理员账号为" + admin.getAdminId());
-            } else {
-                return Result.fail("系统错误，注册管理员失败");
-            }
+
+            return save ? Result.success("注册管理员成功,你的管理员账号为 " + admin.getAdminId()) : Result.fail("系统错误，注册管理员失败");
         }
         return Result.fail("管理员密钥错误");
     }
 
+    /**
+     * 通过 id 获取 admin
+     *
+     * @param adminId id
+     * @return Admin
+     */
     @GetMapping("/getAdminById")
-    public Result getAdminById(String adminId) {
+    public Result<Admin> getAdminById(String adminId) {
         if (StringUtils.isBlank(adminId)) {
             return Result.fail("获取管理员信息失败");
         }
-        LambdaQueryWrapper<Admin> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Admin::getAdminId, adminId);
-        Admin adminDatabase = adminService.getOne(queryWrapper);
-        return Result.success(adminDatabase);
+        Admin adminDatabase = adminService.getOne(new LambdaQueryWrapper<Admin>().eq(Admin::getAdminId, adminId));
+
+        return adminDatabase != null ? Result.success(adminDatabase) : Result.fail("找不到指定 id 的管理员");
     }
 
+    /**
+     * 编辑管理员
+     *
+     * @param admin admin
+     * @return INFO
+     */
     @PutMapping("/editAdmin")
-    public Result editAdmin(@RequestBody Admin admin) {
-        LambdaUpdateWrapper<Admin> adminUpdateWrapper = new LambdaUpdateWrapper<>();
-        adminUpdateWrapper.eq(Admin::getAdminId, admin.getAdminId());
+    public Result<String> editAdmin(@RequestBody Admin admin) {
         admin.setAdminPwd(passwordEncoder.encode(admin.getAdminPwd()));
-        boolean update = adminService.update(admin, adminUpdateWrapper);
-        if (update) {
-            return Result.success("更新个人信息成功");
-        }
-        return Result.fail("更新个人信息失败");
+        boolean update = adminService.update(admin, new LambdaQueryWrapper<Admin>().eq(Admin::getAdminId, admin.getAdminId()));
+
+        return update ? Result.success("更新个人信息成功") : Result.fail("更新个人信息失败");
     }
 
-    //一键帮助学生选课
+    /**
+     * 一键选课
+     *
+     * @return INFO
+     */
     @Transactional
     @GetMapping("/adminChooseCourse")
-    public Result adminChooseCourse() {
+    public Result<String> adminChooseCourse() {
         Long start = System.currentTimeMillis();
-//        adminService.adminChooseCourse();
-        //查询所有专业
         List<Major> majorList = majorService.list();
 
         int nowYear = new Date().getYear() + 1900;//2023
@@ -110,12 +124,8 @@ public class AdminController {
                 List<Course> courseList12Must = courseService.courseList12Must(major.getMajorId());
 
                 listChooseCourse(studentList42, courseList42Must);
-
                 listChooseCourse(studentList32, courseList32Must);
-
-
                 listChooseCourse(studentList22, courseList22Must);
-
                 listChooseCourse(studentList12, courseList12Must);
             }
         } else {
@@ -134,18 +144,12 @@ public class AdminController {
                 List<Course> courseList11Must = courseService.courseList11Must(major.getMajorId());
 
                 listChooseCourse(studentList51, courseList51Must);
-
                 listChooseCourse(studentList41, courseList41Must);
-
                 listChooseCourse(studentList31, courseList31Must);
-
-
                 listChooseCourse(studentList21, courseList21Must);
-
                 listChooseCourse(studentList11, courseList11Must);
             }
         }
-
         Long end = System.currentTimeMillis();
         return Result.success("一键选课完毕,服务器花费时间" + (end - start) + "ms");
     }
@@ -179,17 +183,17 @@ public class AdminController {
 
     @Transactional
     @GetMapping("/adminScoreRandomly")
-    public Result adminScoreRandomly(){
-        Long start=System.currentTimeMillis();
+    public Result<String> adminScoreRandomly() {
+        Long start = System.currentTimeMillis();
         Random random = new Random();
         Score score = new Score();
         List<ChooseCourse> chooseCourseList = chooseCourseService.list();//select * from t_choose_course
         for (ChooseCourse chooseCourse : chooseCourseList) {
-            score.setScoreId(chooseCourse.getStuId()+ "-"+chooseCourse.getChooseCourseId());
+            score.setScoreId(chooseCourse.getStuId() + "-" + chooseCourse.getChooseCourseId());
             LambdaQueryWrapper<Score> scoreQueryWrapper = new LambdaQueryWrapper<>();
-            scoreQueryWrapper.eq(Score::getScoreId,score.getScoreId());
+            scoreQueryWrapper.eq(Score::getScoreId, score.getScoreId());
             Score scoreDatabase = scoreService.getOne(scoreQueryWrapper);
-            if (null!=scoreDatabase)//针对此选课记录打过分
+            if (null != scoreDatabase)//针对此选课记录打过分
             {
                 continue;
             }
@@ -201,13 +205,21 @@ public class AdminController {
             score.setScore(random.nextInt(101));//[0,100]的随机整数
             scoreService.save(score);
         }
-        Long end=System.currentTimeMillis();
+        Long end = System.currentTimeMillis();
         return Result.success("一键随机打分完毕,服务器花费时间" + (end - start) + "ms");
     }
+
+    /**
+     * 删除管理员
+     *
+     * @param token   token
+     * @param adminId adminId
+     * @return INFO
+     */
     @DeleteMapping("/delAdmin")
-    public Result delAdmin(@RequestHeader("Authorization")String token,String adminId){
+    public Result<String> delAdmin(@RequestHeader("Authorization") String token, String adminId) {
         boolean removeById = adminService.removeById(adminId);
-        if (removeById){
+        if (removeById) {
             loginService.logout(token);
             return Result.success("注销账号成功");
         }

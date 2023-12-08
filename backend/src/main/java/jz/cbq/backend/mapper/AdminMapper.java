@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Select;
  * @author caobaoqi
  */
 public interface AdminMapper extends BaseMapper<Admin> {
-    @Select("select admin_id from t_admin order by admin_id desc limit 1")
+    @Select("SELECT admin_id FROM t_admin ORDER BY admin_id DESC LIMIT 1")
     String getMaxId();
 }
