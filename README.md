@@ -55,9 +55,6 @@
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't
-rely on any external dependencies or services._
-
 > Clone the repo
 >    ```sh
 >    git clone https://gitee.com/cola777jz/mysql-homework.git
