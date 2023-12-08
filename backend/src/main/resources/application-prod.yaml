@@ -5,13 +5,13 @@ spring:
     path match:
       matching-strategy: ant_path_matcher
   redis:
-    host: TODO
-    port: TODO
+    host: YOUR_HOST
+    port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: TODO
-    username: TODO
-    password: TODO
+    url: YOUR_URL
+    username: YOUR_USERNAME
+    password: YOUR_PASSWORD
     druid:
       initial-size: 5
       max-active: 20
@@ -35,6 +35,7 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-not-delete-value: 0
       logic-delete-value: 1
+      table-prefix: t_
 logging:
   level:
     jz:
