@@ -22,7 +22,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     Integer getMyAllCourseCount(int limit1, int limit2, String courseName, String majorName, Integer schoolPeriodNum, String coursePeriod);
 
     @Update("update t_course set stu_choose_num=stu_choose_num+1 where course_id = #{courseId} ")
-    int updateStuChooseNum(String courseId);
+    void updateStuChooseNum(String courseId);
 
     @Select("select * from t_course where major_id=#{majorId} order by field (course_period,'大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下')")
     List<Course> courseList42(String majorId);
@@ -48,7 +48,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     @Select("select * from t_course where major_id=#{majorId} and course_period in('大二上','大一下','大一上') order by  field (course_period,'大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下')")
     List<Course> courseList21(String majorId);
 
-    @Select("select * from t_course where major_id=#{majorId} and course_period in('大一上') order by  field (course_period,'大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下'))")
+    @Select("select * from t_course where major_id=#{majorId} and course_period in('大一上') order by  field (course_period,'大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下')")
     List<Course> courseList11(String majorId);
 
 
