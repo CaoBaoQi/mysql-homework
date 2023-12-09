@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://gitee.com/cola777jz/mysql-homework">
-    <img src="images/logo.png" alt="Logo" width="128" height="128">
+    <img src="images/logo.png" alt="Logo" width="128" height="90">
   </a>
 </div>
 <h3 align="center">MySQL-Homework</h3>
