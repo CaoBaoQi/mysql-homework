@@ -16,7 +16,7 @@ export default navbar([
         prefix: "/project",
         children: [
             "",
-            {text: "开始", icon: "/note.svg", link: "/project01.md"},
+            {text: "学生管理系统", icon: "/note.svg", link: "/project01.md"},
         ],
     },
     {
