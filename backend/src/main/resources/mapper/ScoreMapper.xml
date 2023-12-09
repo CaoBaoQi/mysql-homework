@@ -5,15 +5,15 @@
     <select id="getStuScoreList" resultMap="stuScoreMap">
         SELECT a.stu_id, a.stu_name, b.class_name, sum(score) c
         FROM t_score a INNER JOIN t_student b ON a.stu_id=b.stu_id INNER JOIN t_choose_course d ON a.choose_course_id=d.choose_course_id
-        WHERE a.stu_id LIKE concat(#{admissionYearMajor},'%') AND d.if_degree='1'
-        <if test="stuName!='' AND stuName!=null">
-            AND a.stu_name LIKE concat('%',#{stuName},'%')
+        WHERE a.stu_id LIKE concat(#{admissionYearMajor},'%') and d.if_degree='1'
+        <if test="stuName!='' and stuName!=null">
+            and a.stu_name LIKE concat('%',#{stuName},'%')
         </if>
-        <if test="stuId!='' AND stuId!=null">
-            AND a.stu_id LIKE concat('%',#{stuId},'%')
+        <if test="stuId!='' and stuId!=null">
+            and a.stu_id LIKE concat('%',#{stuId},'%')
         </if>
-        <if test="className!='' AND className!=null">
-            AND substr(b.class_name,5) LIKE concat('%',#{className},'%')
+        <if test="className!='' and className!=null">
+            and substr(b.class_name,5) LIKE concat('%',#{className},'%')
         </if>
         GROUP BY a.stu_id,a.stu_name ORDER BY c DESC
         LIMIT #{limit1},#{limit2}
@@ -23,14 +23,14 @@
         select count(DISTINCT a.stu_id)
         FROM t_score a INNER JOIN t_student b on a.stu_id=b.stu_id
         WHERE a.stu_id LIKE concat(#{admissionYearMajor},'%')
-        <if test="stuName!='' AND stuName!=null">
-            AND a.stu_name LIKE concat('%',#{stuName},'%')
+        <if test="stuName!='' and stuName!=null">
+            and a.stu_name LIKE concat('%',#{stuName},'%')
         </if>
-        <if test="stuId!='' AND stuId!=null">
-            AND a.stu_id LIKE concat('%',#{stuId},'%')
+        <if test="stuId!='' and stuId!=null">
+            and a.stu_id LIKE concat('%',#{stuId},'%')
         </if>
-        <if test="className!='' AND className!=null">
-            AND substr(b.class_name,5) LIKE concat('%',#{className},'%')
+        <if test="className!='' and className!=null">
+            and substr(b.class_name,5) LIKE concat('%',#{className},'%')
         </if>
     </select>
 
