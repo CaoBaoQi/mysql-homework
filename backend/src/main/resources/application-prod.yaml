@@ -24,12 +24,17 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  flyway:
+    baseline-description:
+    baseline-version: 20231209001
+    baseline-on-migrate: true
+    default-schema: mysql-homework
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: jz.cbq.backend.entity
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       logic-delete-field: deleted
@@ -41,7 +46,7 @@ logging:
     jz:
       cbq:
         backend:
-          mapper: debug
+          mapper: INFO
 cbq:
   admin-secret: TODO
   jwt-secret: TODO
