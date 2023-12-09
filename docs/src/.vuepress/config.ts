@@ -2,7 +2,7 @@ import { defineUserConfig } from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
-  base: "/",
+  base: "/mysql-homework/",
 
   lang: "zh-CN",
   title: "MySQL-Study",
