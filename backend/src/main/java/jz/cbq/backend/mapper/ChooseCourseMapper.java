@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.Update;
  * @author caobaoqi
  */
 public interface ChooseCourseMapper extends BaseMapper<ChooseCourse> {
-    @Update("update t_choose_course set stu_name=#{stuName} where stu_id=#{stuId}")
+    @Update("UPDATE t_choose_course SET stu_name=#{stuName} WHERE stu_id=#{stuId}")
     void updateStuName(String stuId, String stuName);
 
-    @Delete("delete from t_choose_course")
+    @Delete("DELETE FROM t_choose_course")
     int cancelChooseCourse();
 }
