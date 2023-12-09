@@ -41,4 +41,9 @@ public class StuMessage implements Serializable {
      * 消息状态(已读|未读)
      */
     private String msgState;
+    /**
+     * 是否删除
+     */
+    private Integer deleted;
+
 }

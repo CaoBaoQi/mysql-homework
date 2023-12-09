@@ -39,5 +39,4 @@ public class Admin implements Serializable {
      * 是否删除
      */
     private Integer deleted;
-
 }

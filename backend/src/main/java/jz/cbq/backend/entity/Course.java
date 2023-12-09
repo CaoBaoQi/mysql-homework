@@ -50,5 +50,9 @@ public class Course implements Serializable {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 是否删除
+     */
+    private Integer deleted;
 
 }

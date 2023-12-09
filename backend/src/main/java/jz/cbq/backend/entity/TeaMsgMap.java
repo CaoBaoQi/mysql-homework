@@ -22,4 +22,9 @@ public class TeaMsgMap implements Serializable {
     private String msgContent;
 
     private Date msgTime;
+    /**
+     * 是否删除
+     */
+    private Integer deleted;
+
 }

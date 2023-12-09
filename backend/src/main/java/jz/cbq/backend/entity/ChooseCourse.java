@@ -55,4 +55,9 @@ public class ChooseCourse {
      * 是否选修
      */
     private String ifDegree;
+    /**
+     * 是否删除
+     */
+    private Integer deleted;
+
 }

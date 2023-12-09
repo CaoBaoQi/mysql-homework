@@ -54,15 +54,17 @@ public class AdminController {
     @PostMapping("/add")
     public Result<String> addAdmin(@RequestBody Admin admin, String adminSecret) {
         if (adminSecret.equals(this.adminSecret)) {
-            String adminId = adminService.getNextId();
-            admin.setAdminId(adminId);
+
+            admin.setAdminId(adminService.getNextId());
             admin.setAdminPwd(passwordEncoder.encode(admin.getAdminPwd()));
             admin.setCreateTime(new Date());
+
             boolean save = adminService.save(admin);
 
             return save ? Result.success("注册管理员成功,你的管理员账号为 " + admin.getAdminId()) : Result.fail("系统错误，注册管理员失败");
+        } else {
+            return Result.fail("管理员密钥错误");
         }
-        return Result.fail("管理员密钥错误");
     }
 
     /**
@@ -93,6 +95,23 @@ public class AdminController {
         boolean update = adminService.update(admin, new LambdaQueryWrapper<Admin>().eq(Admin::getAdminId, admin.getAdminId()));
 
         return update ? Result.success("更新个人信息成功") : Result.fail("更新个人信息失败");
+    }
+
+    /**
+     * 删除管理员
+     *
+     * @param token   token
+     * @param adminId adminId
+     * @return INFO
+     */
+    @DeleteMapping("/delAdmin")
+    public Result<String> delAdmin(@RequestHeader("Authorization") String token, String adminId) {
+        boolean removeById = adminService.removeById(adminId);
+        if (removeById) {
+            loginService.logout(token);
+            return Result.success("注销账号成功");
+        }
+        return Result.fail("注销账号失败");
     }
 
     /**
@@ -199,27 +218,12 @@ public class AdminController {
             score.setCourseName(chooseCourse.getCourseName());
             score.setStuName(chooseCourse.getStuName());
             score.setCreateTime(new Date());
-            score.setScore(random.nextInt(101));//[0,100]的随机整数
+            score.setScore(random.nextInt(101) + 50);
             scoreService.save(score);
         }
         Long end = System.currentTimeMillis();
         return Result.success("一键随机打分完毕,服务器花费时间" + (end - start) + "ms");
     }
 
-    /**
-     * 删除管理员
-     *
-     * @param token   token
-     * @param adminId adminId
-     * @return INFO
-     */
-    @DeleteMapping("/delAdmin")
-    public Result<String> delAdmin(@RequestHeader("Authorization") String token, String adminId) {
-        boolean removeById = adminService.removeById(adminId);
-        if (removeById) {
-            loginService.logout(token);
-            return Result.success("注销账号成功");
-        }
-        return Result.fail("注销账号失败");
-    }
+
 }

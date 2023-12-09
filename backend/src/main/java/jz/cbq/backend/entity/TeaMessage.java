@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  * 老师信息 实体类
  *
@@ -36,4 +37,9 @@ public class TeaMessage implements Serializable {
      * 消息时间
      */
     private Date msgTime;
+    /**
+     * 是否删除
+     */
+    private Integer deleted;
+
 }

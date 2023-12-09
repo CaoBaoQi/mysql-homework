@@ -28,7 +28,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         String nowYear = Calendar.getInstance().get(Calendar.YEAR) + "";
         String maxId = getMaxId();
         int nextNum;
-        if (null != maxId) {
+        if (maxId != null) {
             String maxYear = maxId.substring(3, 7);
             if (nowYear.equals(maxYear)) {
                 nextNum = Integer.parseInt(maxId.substring(7, 9)) + 1;
