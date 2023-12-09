@@ -1,7 +1,6 @@
 <template>
   <div class="header">
-    <h1>MySQL-Homework</h1>
-    <el-button type="success" style="margin-top: 8px" @click="logout" round icon="el-icon-switch-button">退出登录</el-button>
+    <a href="https://gitee.com/cola777jz/mysql-homework"><img src="https://readme-typing-svg.herokuapp.com?font=Agbalumo&amp;color=F7184F&amp;center=true&amp;vCenter=true&amp;width=600&amp;lines=MySQL-Homework;" referrerpolicy="no-referrer" alt="Typing SVG"></a>    <el-button type="success" style="margin-top: 8px" @click="logout" round icon="el-icon-switch-button">退出登录</el-button>
   </div>
 </template>
 
