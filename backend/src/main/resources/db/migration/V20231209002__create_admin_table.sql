@@ -1,8 +1,8 @@
 -- ----------------------------
 -- Table structure for t_admin
 -- ----------------------------
-DROP TABLE IF EXISTS `mysql-homework`.t_admin;
-CREATE TABLE `mysql-homework`.t_admin
+DROP TABLE IF EXISTS `t_admin`;
+CREATE TABLE `t_admin`
 (
     `admin_id`    varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL DEFAULT '' COMMENT '管理员 id',
     `admin_name`  varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL     DEFAULT NULL COMMENT '管理员名称',
@@ -18,5 +18,4 @@ CREATE TABLE `mysql-homework`.t_admin
 -- ----------------------------
 -- Records of t_admin
 -- ----------------------------
-INSERT INTO `mysql-homework`.t_admin
-VALUES ('202301', '曹宝琪', '$2a$10$qkFo8ORu5F3x5MHavEuFd./KJ1CXvTpSRAKx8KD2YKULlvU/h8yci', '2023-12-08 14:39:20', 0);
+INSERT INTO `t_admin` VALUES ('202301', '曹宝琪', '$2a$10$jaJzd0NOeS2h1XXSAsy6UufvcmTx/Execx4jdML9zwYUEYB7OkSWm', '2023-12-09 14:02:58', 0);

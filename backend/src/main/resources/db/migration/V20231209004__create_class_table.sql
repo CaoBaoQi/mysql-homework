@@ -1,8 +1,8 @@
 -- ----------------------------
 -- Table structure for t_class
 -- ----------------------------
-DROP TABLE IF EXISTS `mysql-homework`.t_class;
-CREATE TABLE `mysql-homework`.t_class
+DROP TABLE IF EXISTS `t_class`;
+CREATE TABLE `t_class`
 (
     `class_id`    varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '班级 id',
     `major_id`    varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '专业 id',
@@ -24,8 +24,5 @@ CREATE TABLE `mysql-homework`.t_class
 -- ----------------------------
 -- Records of t_class
 -- ----------------------------
-INSERT INTO `mysql-homework`.t_class
-VALUES ('2023011', '01', '2023级计算机科学与技术1班', '计算机科学与技术', 4, '2023-12-09 01:23:15', '2023', '耿老师',
-        0);
-INSERT INTO `mysql-homework`.t_class
-VALUES ('2023021', '02', '2023级test1班', 'test', 1, '2023-12-09 01:27:08', '2023', 'test', 0);
+INSERT INTO `t_class` VALUES ('2023011', '01', '2023级计算机科学与技术1班', '计算机科学与技术', 4, '2023-12-09 14:03:29', '2023', '耿老师', 0);
+INSERT INTO `t_class` VALUES ('2023021', '02', '2023级test1班', 'test', 1, '2023-12-09 14:09:30', '2023', 'testTeacher', 0);
