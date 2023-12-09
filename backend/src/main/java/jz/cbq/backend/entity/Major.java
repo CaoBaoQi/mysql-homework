@@ -1,12 +1,10 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 /**
@@ -21,6 +19,7 @@ public class Major implements Serializable {
     /**
      * 专业 id
      */
+    @TableId(value = "major_id")
     private String majorId;
     /**
      * 专业名称

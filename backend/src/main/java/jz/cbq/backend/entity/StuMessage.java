@@ -1,6 +1,6 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +19,7 @@ public class StuMessage implements Serializable {
     /**
      * 信息 id
      */
+    @TableId(value = "msg_id")
     private String msgId;
     /**
      * 学生 id

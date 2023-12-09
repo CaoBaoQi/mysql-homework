@@ -1,6 +1,6 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -18,6 +18,7 @@ public class TeaMessage implements Serializable {
     /**
      * 消息 id
      */
+    @TableId(value = "msg_id")
     private String msgId;
     /**
      * 学生 id

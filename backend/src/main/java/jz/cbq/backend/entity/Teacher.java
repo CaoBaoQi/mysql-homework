@@ -1,12 +1,11 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -21,6 +20,7 @@ public class Teacher implements Serializable {
     /**
      * 老师 id
      */
+    @TableId(value = "tea_id")
     private String teaId;
     /**
      * 专业 id

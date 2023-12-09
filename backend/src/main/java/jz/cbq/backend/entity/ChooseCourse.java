@@ -1,6 +1,6 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -17,6 +17,7 @@ public class ChooseCourse {
     /**
      * 选课 id
      */
+    @TableId(value = "choose_course_id")
     private String ChooseCourseId;
     /**
      * 学生 id

@@ -1,11 +1,13 @@
 package jz.cbq.backend.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
 public class StuChooseCourseMap {
+    @TableId(value = "choose_course_id")
     private String chooseCourseId;
     private String courseId;
     private String majorId;

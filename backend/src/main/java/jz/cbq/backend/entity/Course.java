@@ -1,6 +1,6 @@
 package jz.cbq.backend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +20,7 @@ public class Course implements Serializable {
     /**
      * 课程 id
      */
+    @TableId(value = "course_id")
     private String courseId;
     /**
      * 专业 id
