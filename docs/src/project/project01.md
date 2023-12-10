@@ -1,5 +1,5 @@
 ---
-title: 开始
+title: 学生管理系统
 order: 1
 icon: /note.svg
 category:
@@ -13,7 +13,7 @@ category:
 
 ## 结构
 
-<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209214849209.png" alt="image-20231209214849209" style="zoom:67%;" />
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231210143845374.png" alt="image-20231210143845374" style="zoom:67%;" />
 
 ## 成员
 
