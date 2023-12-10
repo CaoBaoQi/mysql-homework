@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 /**
- * AdminMapper
+ * ScoreMapper
  *
  * @author caobaoqi
  */
@@ -21,8 +21,6 @@ public interface ScoreMapper extends BaseMapper<Score> {
 
     List<StuScoreMap> getStuScoreList(String admissionYearMajor, String stuName, String stuId, String className, int limit1, int limit2);
 
-/*    @Select("select a.score from t_score a join t_course b on a.course_name=b.course_name where stu_id=#{stuId}\n" +
-            "ORDER BY FIELD(course_period,'大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下')")*/
     int getStuScoreTotal(String admissionYearMajor, String stuName, String stuId, String className, int limit1, int limit2);
 
 
