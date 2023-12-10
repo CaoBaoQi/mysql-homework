@@ -20,13 +20,8 @@ export default navbar([
         ],
     },
     {
-        text: "UPDATE ",
+        text: "CHANGELOG",
         icon: "/update.svg",
         link: "/CHANGELOG.md",
     },
-    {
-        text: "DEMO ",
-        icon: "/demo.svg",
-        link: "/DEMO.md",
-    }
 ]);
