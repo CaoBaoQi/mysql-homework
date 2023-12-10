@@ -22,4 +22,9 @@ public interface IChooseCourseService extends IService<ChooseCourse> {
      * @return count
      */
     int cancelChooseCourse();
+
+
+
+
+
 }

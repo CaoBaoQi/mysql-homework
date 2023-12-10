@@ -47,4 +47,6 @@ public interface IScoreService extends IService<Score> {
      * @return count
      */
     int cancelAllScore();
+
+    String getMax();
 }

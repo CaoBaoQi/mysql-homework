@@ -1,9 +1,12 @@
 package jz.cbq.backend.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jz.cbq.backend.entity.ChooseCourse;
+import jz.cbq.backend.entity.Score;
 import jz.cbq.backend.service.IChooseCourseService;
 import jz.cbq.backend.service.ICourseService;
+import jz.cbq.backend.service.IScoreService;
 import jz.cbq.backend.vo.Result;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,8 @@ public class ChooseCourseController {
     private IChooseCourseService chooseCourseService;
     @Resource
     private ICourseService courseService;
+    @Resource
+    private IScoreService scoreService;
 
     /**
      * 选课
@@ -70,13 +75,18 @@ public class ChooseCourseController {
     @Transactional
     @DeleteMapping("/cancelChooseCourse")
     public Result<String> cancelChooseCourse() {
-        long start = System.currentTimeMillis();
-        int cancelChooseCourse = chooseCourseService.cancelChooseCourse();
-        if (cancelChooseCourse >= 1) {
-            courseService.updateChooseCourseNum();
-            long end = System.currentTimeMillis();
-            return Result.success("一键退课完毕,服务器花费时间" + (end - start) + "ms");
+
+        if (!StringUtils.isEmpty(scoreService.getMax())) {
+            return Result.fail("还有成绩数据无法进行一键退课,请先将分数置空");
+        } else {
+            long start = System.currentTimeMillis();
+            int cancelChooseCourse = chooseCourseService.cancelChooseCourse();
+            if (cancelChooseCourse >= 1) {
+                courseService.updateChooseCourseNum();
+                long end = System.currentTimeMillis();
+                return Result.success("一键退课完毕,服务器花费时间" + (end - start) + "ms");
+            }
+            return Result.fail("一键退课失败");
         }
-        return Result.fail("一键退课失败");
     }
 }

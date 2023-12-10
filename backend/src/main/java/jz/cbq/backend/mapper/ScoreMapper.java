@@ -16,6 +16,9 @@ import java.util.List;
  */
 public interface ScoreMapper extends BaseMapper<Score> {
 
+    @Select("SELECT score_id FROM t_score ORDER BY score_id DESC LIMIT 1")
+    String getMaxId();
+
     List<StuScoreMap> getStuScoreList(String admissionYearMajor, String stuName, String stuId, String className, int limit1, int limit2);
 
 /*    @Select("select a.score from t_score a join t_course b on a.course_name=b.course_name where stu_id=#{stuId}\n" +

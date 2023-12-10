@@ -14,6 +14,11 @@ public interface ChooseCourseMapper extends BaseMapper<ChooseCourse> {
     @Update("UPDATE t_choose_course SET stu_name=#{stuName} WHERE stu_id=#{stuId}")
     void updateStuName(String stuId, String stuName);
 
-    @Delete("update t_choose_course set deleted=1")
+/*    @Delete("update t_choose_course set deleted=1")
+    int cancelChooseCourse();*/
+
+    @Delete("DELETE from t_choose_course")
     int cancelChooseCourse();
 }
+
+
