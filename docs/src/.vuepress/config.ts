@@ -2,6 +2,7 @@ import { defineUserConfig } from "vuepress";
 import theme from "./theme.js";
 
 export default defineUserConfig({
+  // pages  build config
   base: "/mysql-homework/",
 
   lang: "zh-CN",
