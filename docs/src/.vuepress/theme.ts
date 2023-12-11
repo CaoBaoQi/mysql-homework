@@ -9,7 +9,7 @@ export default hopeTheme({
         url: "https://github.com/CaoBaoQi",
         email: "2023cbq@gmail.com"
     },
-
+    fullscreen: true,
     iconAssets: "fontawesome-with-brands",
     darkmode: "enable",
     logo: "/logo.svg",
@@ -42,6 +42,7 @@ export default hopeTheme({
     },
 
     plugins: {
+        photoSwipe: true,
         // You should generate and use your own comment service
         comment: {
             provider: "Giscus",

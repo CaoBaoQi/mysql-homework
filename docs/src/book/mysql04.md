@@ -9,35 +9,37 @@ category:
 
 ## 一、MySQL 数据库操作环境
 
-### 1.1 MySQL 数据库管理系统简介
-
-###   1.1.1 MySQL 的系统特性
+### MySQL 数据库管理系统简介
 
 
 
-###  1.1.2 MySQL 的优势
+###   MySQL 的系统特性
+
+
+
+###  MySQL 的优势
 
 MySQL 的优势
 
-###  1.1.3 MySQL 安装
+###  MySQL 安装
 
 MySQL 安装
 
-### 使用 Docker 安装
+### - 使用 Docker 安装
 
--  拉取 Mysql 镜像
+### 1. 拉取 MySQL 镜像
 
 ```Bash
 docker pull mysql
 ```
 
--  创建容器卷
+### 2. 创建容器卷
 
 ```Bash
 docker volume create mysql8_3306
 ```
 
--  创建创建 Docker 网络
+### 3. 创建创建 Docker 网络
 
 ```Bash
 docker network create mysql8-net
@@ -56,22 +58,24 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233400061.png" alt="image-20231201233400061" style="zoom:67%;" />
 
-### 使用 MySQL Installer 安装
+### - 使用 MySQL Installer 
 
 使用 MySQL Installer 安装
 
-### 1.2 MySQL 图形化管理工具 Navicat
-
-### 1.2.1 安装 Navicat Premium 16
+### 图形化管理工具 Navicat
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233410470.png" alt="image-20231201233410470" style="zoom:67%;" />
 
-
-
 [Navicat Premium](https://www.navicat.com.cn/) 是一套可创建多个连接的数据库开发工具，让你从单一应用程序中同时连接 MySQL、Redis、MariaDB、MongoDB、SQL Server、Oracle、PostgreSQL 和 SQLite 。它与 GaussDB 主备版、OceanBase 数据库及 Amazon RDS、Amazon Aurora、Amazon Redshift、Amazon ElastiCache、Microsoft Azure、Oracle Cloud、MongoDB Atlas、Redis Enterprise Cloud、阿里云、腾讯云和华为云等云数据库兼容。你可以快速轻松地创建、管理和维护数据库。
+
+### 安装 Navicat Premium 16
+
+### - Tools
 
 1. [点击下载open in new window](https://yong-gan-niu-niu-1311841992.cos.ap-beijing.myqcloud.com/tools/navicat16Tools.zip) 激活工具
 2. [Navicat Premium 16](https://www.navicat.com.cn/download/direct-download?product=navicat_premium_cs_x64.exe&location=1)
+
+### - Run
 
 -  **以管理员身份运行**
 
@@ -83,9 +87,7 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233432860.png" alt="image-20231201233432860" style="zoom:67%;" />
 
-
-
--  断网、断网、断网
+### - 断网、断网、断网
 
 复制上方生成的 Keygen
 
@@ -109,7 +111,7 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 
 
--  验证
+### - 验证
 
 
 
@@ -119,9 +121,9 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233506931.png" alt="image-20231201233506931" style="zoom:67%;" />
 
-### 1.2.2 Navicat 中数据库的基本操作
+### Navicat 中数据库的基本操作
 
--  创建连接
+### - 创建连接
 
 名字起错了应该是 JingDongYun-3306 但没啥影响只是一个标识
 
@@ -135,7 +137,7 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 
 
--  创建数据库
+### - 创建数据库
 
 
 
@@ -145,9 +147,9 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233548979.png" alt="image-20231201233548979" style="zoom:67%;" />
 
--  创建表
 
 
+### - 创建表
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233559112.png" alt="image-20231201233559112" style="zoom:67%;" />
 
@@ -157,51 +159,39 @@ docker run -d --name mysql8_3306 -e MYSQL_ROOT_PASSWORD=root -v mysql8_3306:/var
 
 
 
--  修改表
+### - 修改表
 
 
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233615999.png" alt="image-20231201233615999" style="zoom:67%;" />
 
--  表中主键和外键的设置
+### - 表中主键和外键的设置
 
+TODO
 
-
--  生成数据
-
-
-
-
+### - 生成数据
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233628809.png" alt="image-20231201233628809" style="zoom:67%;" />
 
-
-
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233643055.png" alt="image-20231201233643055" style="zoom:67%;" />
 
-
-
--  运行和转储 SQL 文件
-
-
+### - 运行和转储 SQL 文件
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233651116.png" alt="image-20231201233651116" style="zoom:67%;" />
 
-
-
--  创建查询
+### - 创建查询
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231201233700250.png" alt="image-20231201233700250" style="zoom:67%;" />
 
 
 
-### 1.3 MySQL 支持的字符集
+### MySQL 支持的字符集
 
 MySQL 支持的字符集
 
 ## 二、SQL 概述及功能
 
-### 2.1 SQL 概述
+### SQL 概述
 
 **SQL** 的全称是 ==Structure Query Language== ，即结构化查询语言，是关系数据库的国际标准语言。 1974 年， IBM 公司的研究员 Boyce 和 Chamberlin 开发了 **SEQUEL** 语言 (SQL 的原型），而后 IBM 的 San Jose 实验室研制了关系数据库实验系统 System R ，并在该系统上成功实现了SEQUEL 语言，之后在此基础上推出 SQL 语言。
 
@@ -209,7 +199,7 @@ MySQL 支持的字符集
 
 自 20 世纪 80 年代以来，几乎所有的关系数据库产品都支持 **SQL** 或提供了与 SQL 的接口，这有利于不同的数据库管理系统之间实现良好的互操作性，也有利于数据库操纵语言的标准化制定。
 
-### 2.2 SQL 的特点及命令动词
+### SQL 的特点及命令动词
 
 ### SQL 语言的特点
 
@@ -232,11 +222,15 @@ SQL 语言风格统一，可以完成数据库活动中的全部工作，包括�
 
 - 支持三级数据模式
 
-> - 全体基本表构成了数据库的 全局逻辑模式
-> - 视图和部分基本表（被用户直接操作）构成了数据库的 外模式
-> - 数据库的存储文件和索引文件则构成了数据库的 内模式。
+::: danger 三级数据模式
 
-#### SQL 语言三大功能及命令动词
+- **全体基本表构成了数据库的 全局逻辑模式**
+- **视图和部分基本表（被用户直接操作）构成了数据库的 外模式**
+- **数据库的存储文件和索引文件则构成了数据库的 内模式。**
+
+:::
+
+### SQL 语言三大功能及命令动词
 
 SQL 语言简洁，易学易用，主要有以下三大功能和 9 个命令动词。
 
@@ -250,7 +244,7 @@ SQL 语言简洁，易学易用，主要有以下三大功能和 9 个命令动�
 
 MySQL 中提供了多种数据类型主要是数值型、 字符串型、 日期时间型三类。
 
-### 3.1 数值型
+### 数值型
 
 MySQL 中支持的数值型包括：
 
@@ -264,19 +258,19 @@ MySQL 中支持的数值型包括：
 
 TODO
 
-- 整数类型
+### - 整数型
 
 五种整型占用的字节不同，能存储的数的范围也不同，可以根据所占字节数计算出每一种类型的取值范围，如果不设置无符号还是有符号，默认为有符号。MySQL 支持为整型数据设置显示宽度，比如 INT （ 5 ），指定最大的显示宽度为 5 个字符，如果数值的宽度小于指定宽度时会在左边补空格。显示宽度只用于显示，并不能限制取值范围和占用空间，比如 INT （ 5 ）能表示的数的范围仍然是一 2147483M8 到 2147483M7 ，占用的空间也是 4 个字节不变。
 
-- 浮点小数和定点小数类型
+### - 浮点小数和定点小数型
 
 浮点小数型包括单精度浮点类型 FLOAT 和双精度浮点类型 DOUBLE ，定点小数型只有一种 DECIMALO 这三种类型都可以用（ M ， D) 来表示，其中 M 为精度，表示整数部分加小数部分的总长度， D 为标度，表示小数部分的长度。 M 和 D 如果省略，对于 FLOAT 和 DOUBLE会根据插人数值的精度来决定精度，对于 DECIMAL 则 M 默认为 10 而 D 默认为 0浮点数相对于定点数的优点是在长度一定的情况下，浮点数能够表示更大的数据范围；它的缺点是会引起精度问题，浮点数在数据库中存放的是近似值，而定点数在数据库中存放的是精确值。关于浮点数和定点数的应用中，应注意以下几点：0 ）浮点数存在误差问题，编程中，如果用到浮点数，应尽量避免做浮点数比较或精确数值运算；（ 2 ）对货币等对精度敏感的数据，应该用定点数表示或存储；（ 3 ）要注意浮点数中一些特殊值的处理。
 
-### 3.2 字符串型
+### 字符串型
 
 MySQL 中的字符串型用于存储字符串数据，包括文本字符串、二进制字符串和复合类型字符串三大类。
 
-### 文本字符串
+### - 文本字符串
 
 >  普通文本字符串 CHAR 和 VARCHAR
 
@@ -288,7 +282,7 @@ CHAR 指的是定长字符串，在定义时指定字符串的长度，若存人
 
 TEXT 型用于一长文比日文“谷、个人伊它不CHAR 或 VARCHAR 可以指定字符串长度，而且也不能有默认值。
 
-### 二进制字符串
+### - 二进制字符串
 
 > 普通二进制字符串
 
@@ -300,7 +294,7 @@ TEXT 型用于一长文比日文“谷、个人伊它不CHAR 或 VARCHAR 可以�
 
 
 
-### 复合型字符串
+### - 复合型字符串
 
 > ENUM
 
@@ -310,10 +304,10 @@ ENUM 类型的字段只允许从一个集合中取得一个值，集合中最多
 
 SET 类型的字段允许从一个集合中取得多个值，集合中最多包含 64 个元素
 
-### 3.3 日期时间型
+### 日期时间型
 
 DATA 类型仅存储日期而不存储时间， TIME 类型仅存储时间， DATATIME 和TIMESTAMP 都是既存储日期也存储时间，如果需要表示年月日时分秒， DATETIME 和 TIME-STAMP 都是可以选择的数据类型，下面对两种类型进行说明1. 从存储空间上， DATETIME 占 8 个字节， TIMESTAMP 占 4 个字节；2 ，从取值范围上， DATETIME 是 1 用一 01 一 01 佣：佣：佣至 9999 一 12 一 31 23 ： 59 ： 59 ，TIMESTAMP 是 1970 一 01 一 01 0() ： 00 ： 01.0 ）） 0 至 2038 一 01 一 19 03 ： 14 ： 07 ；3 、从显示格式上， DATETIME 是 YYYY —MM —DD HH ： MM ： SS ，而 TIMESTAMP 是YYYYMMDD HHMMSS ；4 ．从存储形式上， TIMESTAMP 存储占用的空间和 INT 类型相同，实际上 TIMESTAMP 类型的数据就是按 INT 类型的数据来存储的，而 DATATIME 类型的数据是按字符串型的数据来存储的。因为 INT 型数据的范围有限制，所以和 INT 类型一样其存储的时间范围也是有限制的，超过了其时间范围的数据建议使用 DATETIME 类型来保存。，在表中若定义一个字段为 TIMESTAMP 类型，这个字段里的时间数据会随其他字段的修改自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间
 
-### 3.4 选择数据类型的原则
+### 选择数据类型的原则
 
 在 MYQL 中为字段或变量选择合适的数据类型，可以有效地节省存储空间和提升数据的计算性能，数据类型的选择应遵循以下几个基本原则。1. 在指定数据类型的时候一般是采用从小原则，比如能用 TINYINT 的最好就不用 INT ，能用 FLOAT 类型的就不用 DOU BLE 类型，能用 CHAR 就尽量不用 TEXT ，这样会让 MYSQL在运行效率上提高很多，尤其是大数据量测试条件下；2 ． DECIMAL 最适合保存准确度要求高，而且用于计算的数据，比如价格，但是在使用DECIMAL 类型的时候，注意长度设置；3 ．不需要把数据表设计的太过复杂，功能模块上区分或许对于后期的维护更为方便，慎重出现大杂烩数据表；4 ，整型通常是最佳的数据类型，因为它速度快，并且能使用 AUTO-INCREMENT ，如果整型数据没有负数，如 ID 号，建议指定为 UNSIGNE D 无符号类型，容量可以扩大一倍；5 ．避免使用整数的显示宽度，尽量不要用 INT （ 10 ）类似的方法指定字段显示宽度，直接用 INT
