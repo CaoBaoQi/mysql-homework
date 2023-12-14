@@ -76,7 +76,7 @@ INSERT INTO `t_admin` VALUES ('202301', '曹宝琪', '$2a$10$jaJzd0NOeS2h1XXSAsy
 
 ### E-R 图
 
-<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209215809331.png" alt="image-20231209215809331" style="zoom:67%;" />
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214114959225.png" alt="image-20231214114959225" style="zoom:67%;" />
 
 ## major 专业表
 
@@ -123,7 +123,7 @@ INSERT INTO `t_major` VALUES ('02', 'test', 1, 2, '2023-12-09 14:09:12', 1, 1, 0
 
 ### E-R 图
 
-
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115015144.png" alt="image-20231214115015144" style="zoom:67%;" />
 
 ## class 班级表
 
@@ -176,6 +176,8 @@ INSERT INTO `t_class` VALUES ('2023021', '02', '2023级test1班', 'test', 1, '20
 ![image-20231209204710931](https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209204710931.png)
 
 ### E-R 图
+
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115034522.png" alt="image-20231214115034522" style="zoom:67%;" />
 
 ## teacher 老师表
 
@@ -233,6 +235,8 @@ INSERT INTO `t_teacher` VALUES ('tea2023021', '02', 'testTeacher', '2023级test1
 ![image-20231209204829671](https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209204829671.png)
 
 ### E-R 图
+
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115120532.png" alt="image-20231214115120532" style="zoom:67%;" />
 
 ## student 学生表
 
@@ -296,6 +300,8 @@ INSERT INTO `t_student` VALUES ('202302101', 'tea2023021', '2023021', '02', 'tes
 
 ### E-R 图
 
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115143381.png" alt="image-20231214115143381" style="zoom:67%;" />
+
 ## course 课程表
 
 ### Structure
@@ -354,6 +360,8 @@ INSERT INTO `t_course` VALUES ('course0202', '02', 'testMust', '1', 'test', '202
 ![image-20231209204857271](https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209204857271.png)
 
 ### E-R 图
+
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115204972.png" alt="image-20231214115204972" style="zoom:67%;" />
 
 ## choose_course 选课表
 
@@ -434,6 +442,8 @@ INSERT INTO `t_choose_course` VALUES ('202302101choosecourse0202', '202302101', 
 
 ### E-R 图
 
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115223450.png" alt="image-20231214115223450" style="zoom:67%;" />
+
 ## score 成绩表
 
 ### Structure
@@ -510,6 +520,8 @@ INSERT INTO `t_score` VALUES ('202302101-202302101choosecourse0202', '202302101c
 
 ### E-R 图
 
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115236347.png" alt="image-20231214115236347" style="zoom:67%;" />
+
 ## stu_message 学生消息表
 
 ### Structure
@@ -564,6 +576,8 @@ INSERT INTO `t_stu_message` VALUES ('tea2023011msg20230110417ac4fdc-9059-47a8-91
 
 ### E-R 图
 
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115253876.png" alt="image-20231214115253876" style="zoom:67%;" />
+
 ## tea_message 老师消息表
 
 ### Structure
@@ -616,3 +630,5 @@ INSERT INTO `t_tea_message` VALUES ('tea2023011msg202301104e4a95ba1-4c81-4f83-bb
 ![image-20231209204955601](https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231209204955601.png)
 
 ### E-R 图
+
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214115314883.png" alt="image-20231214115314883" style="zoom:67%;" />
