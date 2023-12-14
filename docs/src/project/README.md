@@ -19,6 +19,10 @@ category:
 
 <img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231210143845374.png" alt="image-20231210143845374" style="zoom:67%;" />
 
+### Show
+
+> [MySQL-Homework-Show](./project-show.md)
+
 ### 成员
 
 | 姓名          | 学号         | 主要工作                          |
