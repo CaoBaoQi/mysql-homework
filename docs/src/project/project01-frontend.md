@@ -877,6 +877,8 @@ h1 {
 </style>
 ```
 
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214114606740.png" alt="image-20231214114606740" style="zoom:67%;" />
+
 ### 注册
 
 ```vue
@@ -1021,7 +1023,7 @@ h1 {
 </style>
 ```
 
-
+<img src="https://jz-cbq-1311841992.cos.ap-beijing.myqcloud.com/images/image-20231214114627073.png" alt="image-20231214114627073" style="zoom:67%;" />
 
 ## 管理员页面
 
