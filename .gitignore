@@ -1,6 +1,7 @@
 # global
 .idea
 *.iml
+.fastRequest
 
 # vue-hope
 docs/node_modules
