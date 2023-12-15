@@ -1,7 +1,5 @@
 package jz.cbq.bookdemobackend.service;
 
-import jz.cbq.bookdemobackend.entity.BaseEntity;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * @date 2023/12/15 12:49
  * @since 1.0.0
  */
-public interface BaseService<T extends BaseEntity> {
+public interface BaseService<T> {
     T findById(Integer id);
     List<T> selectAll();
     Integer save(T entity);

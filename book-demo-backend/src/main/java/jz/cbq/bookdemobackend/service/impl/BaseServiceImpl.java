@@ -1,6 +1,5 @@
 package jz.cbq.bookdemobackend.service.impl;
 
-import jz.cbq.bookdemobackend.entity.BaseEntity;
 import jz.cbq.bookdemobackend.service.BaseService;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Service
-public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public T findById(Integer id) {
         return null;

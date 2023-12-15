@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
  * @date 2023/12/15 13:07
  * @since 1.0.0
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class Student extends BaseEntity{
+public class Student {
     /**
      * 学生 id
      */
