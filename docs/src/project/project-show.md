@@ -1,7 +1,7 @@
 ---
 title: 学生管理系统-展示
 order: 5
-icon: /note.svg
+icon: /show.svg
 category:
     - PROJECT
     - MD

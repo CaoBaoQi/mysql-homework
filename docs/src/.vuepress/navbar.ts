@@ -10,7 +10,8 @@ export default navbar([
             "",
             {text: "数据库基本知识", icon: "/mysql-item.svg", link: "/mysql01.md"},
         ],
-    }, {
+    },
+    {
         text: "PROJECT",
         icon: "/project.svg",
         prefix: "/project",
@@ -18,6 +19,11 @@ export default navbar([
             "",
             {text: "学生管理系统", icon: "/note.svg", link: "/project01.md"},
         ],
+    },
+    {
+        text: "Homework",
+        icon: "/homework.svg",
+        link: "/Homework.md",
     },
     {
         text: "CHANGELOG",

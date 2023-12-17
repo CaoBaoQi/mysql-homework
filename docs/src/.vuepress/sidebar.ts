@@ -11,6 +11,11 @@ export default sidebar({
             children: "structure",
         },
         {
+            text: "Homework",
+            icon: "/homework.svg",
+            link: "Homework.md",
+        },
+        {
             text: "PROJECT",
             icon: "/project.svg",
             prefix: "project/",
