@@ -1,0 +1,1 @@
+import{_ as t}from"./plugin-vue_export-helper-x3n3nnut.js";import{o as r,c as o,b as e,d as a}from"./app-HNg_g3PK.js";const s={},c=e("h2",{id:"start",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#start","aria-hidden":"true"},"#"),a(" Start")],-1),n=[c];function _(d,i){return r(),o("div",null,n)}const m=t(s,[["render",_],["__file","Homework.html.vue"]]);export{m as default};
